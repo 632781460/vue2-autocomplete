@@ -1,5 +1,5 @@
 {
-  "name": "vue2-autocomplete-js",
+  "name": "krvue2-autocomplete-js",
   "version": "0.0.3",
   "description": "Autocomplete Component for Vue 2",
   "main": "./dist/vue2-autocomplete.js",

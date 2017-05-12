@@ -10,11 +10,14 @@
 
   <div id="app">
     <autocomplete
-      url="http://localhost/proyek/goodmovie/api/api/v1/search"
-      :custom-params="{ token: 'dev' }"
+      url="http://local.36kr.com:3012/api/company/getCom"
       anchor="title"
+      param="companyName"
       label="writer"
       :on-select="getData" >
+      <template slot="suggestRow" scope="scope">
+        <span>{{ scope.data.formatted_address}}</span>
+      </template>
     </autocomplete>
   </div>
 

@@ -18,14 +18,19 @@
         <li v-for="(data, i) in json"
             transition="showAll"
             :class="activeClass(i)">
-
-          <a  href="#"
-              @click.prevent="selectList(data)"
-              @mousemove="mousemove(i)">
-            <b>{{ data[anchor] }}</b>
-            <span>{{ data[label] }}</span>
-          </a>
-
+            <slot 
+              name="suggestRow"
+              :data="data" 
+              :select-list="selectList" 
+              :index="i"
+              :mousemove="mousemove" >
+              <a  href="#"
+                  @click.prevent="selectList(data)"
+                  @mousemove="mousemove(i)">
+                <b>{{ data[anchor] }}</b>
+                <span>{{ data[label] }}</span>
+              </a>
+            </slot>
         </li>
       </ul>
     </div>

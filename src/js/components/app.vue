@@ -8,6 +8,11 @@
       label="formatted_address"
       :process="processJSON"
       :on-select="getData" >
+        <template slot="suggestRow" scope="scope">
+          <span @click.prevent="scope.selectList(scope.data)"
+            @mousemove="scope.mousemove(scope.index)"
+          >{{ scope.data.formatted_address}}</span>
+        </template>
     </autocomplete>
   </div>
 </template>
