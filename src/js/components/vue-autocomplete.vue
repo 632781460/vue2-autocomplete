@@ -14,7 +14,8 @@
             autocomplete="off" />
 
     <div :class="(className ? className + '-list ' : '') + 'autocomplete transition autocomplete-list'" v-show="showList">
-      <ul>
+      <div v-if="loading">{{loadingText}}</div>
+      <ul v-else-if="json.length">
         <li v-for="(data, i) in json"
             transition="showAll"
             :class="activeClass(i)">
@@ -33,6 +34,7 @@
             </slot>
         </li>
       </ul>
+      <div v-else>{{noDataText}}</div>
     </div>
   </div>
 </template>
@@ -76,6 +78,8 @@
       id: String,
       className: String,
       placeholder: String,
+      noDataText: String,
+      loadingText: String,
 
       // Intial Value
       initValue: {
@@ -136,6 +140,7 @@
       return {
         showList: false,
         type: "",
+        loading: false,
         json: [],
         focusList: ""
       };
@@ -280,6 +285,7 @@
 
           ajax.open('GET', `${this.url}?${this.param}=${val}${params}`, true);
           ajax.send();
+          this.loading = true;
 
           ajax.addEventListener('progress', function (data) {
             if(data.lengthComputable){
@@ -296,6 +302,7 @@
             this.onAjaxLoaded ? this.onAjaxLoaded(json) : null
 
             self.json = self.process ? self.process(json) : json;
+            self.loading = false;
           });
 
         }

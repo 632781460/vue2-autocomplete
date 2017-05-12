@@ -6,6 +6,8 @@
       :custom-params="{ token: 'dev' }"
       anchor="formatted_address"
       label="formatted_address"
+      loading-text="加载中..."
+      no-data-text="暂无数据"
       :process="processJSON"
       :on-select="getData" >
         <template slot="suggestRow" scope="scope">
