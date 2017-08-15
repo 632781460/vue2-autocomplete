@@ -13,7 +13,7 @@
             @focus="focus"
             autocomplete="off" />
 
-    <div :class="(className ? className + '-list ' : '') + 'autocomplete transition autocomplete-list'" v-show="showList">
+    <div :class="(className ? className + '-list ' : '') + 'autocomplete transition autocomplete-list'" v-show="internalShowList">
       <div v-if="loading">{{loadingText}}</div>
       <ul v-else-if="json.length">
         <li v-for="(data, i) in json"
@@ -135,7 +135,11 @@
       onAjaxLoaded: Function,
 
     },
-
+    computed: {
+      internalShowList() {
+        return this.type && this.showList;
+      },
+    },
     data() {
       return {
         showList: false,
@@ -181,7 +185,7 @@
       showAll(){
         this.json = [];
 
-        this.getData("")
+        this.getData(this.type)
 
         // Callback Event
         this.onShow ? this.onShow() : null
@@ -203,6 +207,9 @@
       },
 
       focus(e){
+        if (this.type) {
+          this.showAll();
+        }
         this.focusList = 0;
 
         // Callback Event
