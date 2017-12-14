@@ -14,9 +14,11 @@
             autocomplete="off" />
 
     <div :class="(className ? className + '-list ' : '') + 'autocomplete transition autocomplete-list'" v-show="internalShowList">
-      <div v-if="loading">{{loadingText}}</div>
+      <slot name="top" :list="json" :loading="loading"></slot>
+      <div class="loading-text" v-if="loading">{{loadingText}}</div>
       <ul v-else-if="json.length">
         <li v-for="(data, i) in json"
+            :key="i"
             transition="showAll"
             :class="activeClass(i)">
             <slot 
@@ -34,7 +36,7 @@
             </slot>
         </li>
       </ul>
-      <div v-else>{{noDataText}}</div>
+      <div class="no-data-text" v-else>{{noDataText}}</div>
     </div>
   </div>
 </template>
@@ -303,6 +305,9 @@
           });
 
           ajax.addEventListener('loadend', function (data) {
+            if (val !== self.type) {
+              return;
+            }
             let json = JSON.parse(this.responseText);
 
             // Callback Event
